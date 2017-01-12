@@ -12,7 +12,7 @@ URL = 'https://www.avvo.com'
 
 configure_logging(install_root_handler=False)
 logging.basicConfig(
-    filename='log.txt',
+    filename='log/log_1.txt',
     format='%(levelname)s: %(message)s',
     level=logging.INFO
 )
@@ -32,7 +32,7 @@ class AvvoSpider(CrawlSpider):
             pagination_page_numbers = pagination_page_numbers[0] + 1
         else:
             pagination_page_numbers = pagination_page_numbers[0]
-        pagination_page_numbers = 1
+        pagination_page_numbers = 70578
         for page_number in range(1, pagination_page_numbers+1):
             logging.info(page_number)
             url = ''.join([self.start_urls[0], str(page_number)])
@@ -61,9 +61,11 @@ def check_account_rating(response):
     account_xpath_list = response.xpath('//div[@itemscope="itemscope"]')
     for account in account_xpath_list:
         rating = account.xpath('div//span[@class="sr-only"]/text()').extract_first()
-        if not rating.isalpha() and float(rating[:3]) <= STARS:
-
-            page_urls.append(account.xpath('div//a/@href').extract_first())
+        try:
+            if not rating.isalpha() and float(rating[:3]) <= STARS:
+                page_urls.append(account.xpath('div//a/@href').extract_first())
+        except Exception:
+            continue
     return page_urls
 
 
