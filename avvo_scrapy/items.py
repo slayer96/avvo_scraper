@@ -14,5 +14,6 @@ class AvvoScrapyItem(scrapy.Item):
     address = scrapy.Field()
     phone = scrapy.Field()
     website = scrapy.Field()
+    rating = scrapy.Field()
 
 
