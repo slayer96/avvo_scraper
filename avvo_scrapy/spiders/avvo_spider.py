@@ -41,7 +41,7 @@ class AvvoSpider(CrawlSpider):
             yield scrapy.Request(url, callback=self.get_page_urls)
 
     def get_page_urls(self, response):
-        page_urls = check_account_rating(response)
+        page_urls = self.check_account_rating(response)
         # logging.info(page_urls)
         for page_url in page_urls:
             url = ''.join([URL, page_url])
