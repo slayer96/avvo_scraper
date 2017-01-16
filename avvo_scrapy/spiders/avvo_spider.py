@@ -57,18 +57,18 @@ class AvvoSpider(CrawlSpider):
         item['rating'] = response.xpath('//span[@itemprop="ratingValue"]/@content').extract_first()
         yield item
 
-
-def check_account_rating(response):
-    page_urls = []
-    account_xpath_list = response.xpath('//div[@itemscope="itemscope"]')
-    for account in account_xpath_list:
-        rating = account.xpath('div//span[@class="sr-only"]/text()').extract_first()
-        try:
-            if not rating.isalpha() and float(rating[:3]) <= STARS:
-                page_urls.append(account.xpath('div//a/@href').extract_first())
-        except AttributeError:
-            continue
-    return page_urls
+    @staticmethod
+    def check_account_rating(response):
+        page_urls = []
+        account_xpath_list = response.xpath('//div[@itemscope="itemscope"]')
+        for account in account_xpath_list:
+            rating = account.xpath('div//span[@class="sr-only"]/text()').extract_first()
+            try:
+                if not rating.isalpha() and float(rating[:3]) <= STARS:
+                    page_urls.append(account.xpath('div//a/@href').extract_first())
+            except AttributeError:
+                continue
+        return page_urls
 
 
 
