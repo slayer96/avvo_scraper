@@ -1,5 +1,4 @@
 import logging
-import datetime
 
 import scrapy
 from scrapy.utils.log import configure_logging
@@ -8,11 +7,13 @@ from scrapy.spiders import CrawlSpider
 from ..items import AvvoScrapyItem
 from ..settings import STARS
 
+
 URL = 'https://www.avvo.com'
+
 
 configure_logging(install_root_handler=False)
 logging.basicConfig(
-    filename='log/log_%s.txt' % datetime.datetime.now().time(),
+    # filename='log/log.txt',
     format='%(levelname)s: %(message)s',
     level=logging.INFO
 )
@@ -28,12 +29,14 @@ class AvvoSpider(CrawlSpider):
         account_numbers = int(
             response.xpath('//div[@id="skip_to_content"]/following-sibling::div/@content').extract_first())
         pagination_page_numbers = divmod(account_numbers, 10)
+
         if pagination_page_numbers[1]:
             pagination_page_numbers = pagination_page_numbers[0] + 1
         else:
             pagination_page_numbers = pagination_page_numbers[0]
+
         for page_number in range(1, pagination_page_numbers + 1):
-            # logging.info(page_number)
+            logging.info(page_number)
             url = ''.join([self.start_urls[0], str(page_number)])
             yield scrapy.Request(url, callback=self.get_page_urls)
 
@@ -41,7 +44,6 @@ class AvvoSpider(CrawlSpider):
         page_urls = check_account_rating(response)
         # logging.info(page_urls)
         for page_url in page_urls:
-            # logging.info(page_url)
             url = ''.join([URL, page_url])
             yield scrapy.Request(url, callback=self.parse_account_page)
 

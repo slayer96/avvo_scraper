@@ -1,0 +1,10 @@
+projects:
+  default: 145081
+  prod: 145081
+apikeys:
+  default: d0ff5eb724cf48ec863c062f97cc4904
+
+version: GIT
+
+requirements:
+  file: requirements.txt
