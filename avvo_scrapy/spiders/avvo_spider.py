@@ -1,4 +1,5 @@
 import logging
+import datetime
 
 import scrapy
 from scrapy.utils.log import configure_logging
@@ -11,7 +12,7 @@ URL = 'https://www.avvo.com'
 
 configure_logging(install_root_handler=False)
 logging.basicConfig(
-    filename='log/log_1.txt',
+    filename='log/log_%s.txt' % datetime.datetime.now().time(),
     format='%(levelname)s: %(message)s',
     level=logging.INFO
 )

@@ -96,4 +96,4 @@ avvo_scrapy/spiders/__init__.py
 
 /result_data/
 /log/*.txt
-log/
+
