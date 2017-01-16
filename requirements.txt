@@ -1,2 +1,2 @@
-python==2.7
+python==2.7.12
 Scrapy==1.1.1
