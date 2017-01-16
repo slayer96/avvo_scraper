@@ -1,2 +1,2 @@
 python==2.7
-scrapy==1.1.1
+Scrapy==1.1.1
